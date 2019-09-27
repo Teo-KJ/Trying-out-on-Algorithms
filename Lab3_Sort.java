@@ -2,7 +2,7 @@ package CZ2001;
 
 import java.util.Scanner;
 
-public class Lab3_MergeSort {
+public class Lab3_Sort {
 	
 	public static void main (String [] args) {
 		int i;
