@@ -55,11 +55,17 @@ public class Lab3_Sort {
 		long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
 		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total + " ns");
 		
+		long MergeSort_Start = System.nanoTime();
 		mergeSort(intData2, 0, num_of_int-1);
+		long MergeSort_End = System.nanoTime();
+		
 		System.out.println("\nThe sorted list is: ");
 		for (i=0; i<num_of_int; i++) {
 			System.out.print(intData2[i] + " ");
 		}
+		
+		long MergeSort_Total = MergeSort_End - MergeSort_Start;
+		System.out.println("\nTotal time spent at Merge Sort is " + MergeSort_Total + " ns");
 		
 		sc.close();
 	}
@@ -79,49 +85,42 @@ public class Lab3_Sort {
 		}
 	}
 
+	public static int mergeSort(int[] arr, int start, int end) {
+		int comparisons = 0;
+	    int mid = (start + end) / 2;
 
-public static void merge(int [] array, int start, int end) {
-	int size = end-start;
-	int i, temp;
-	int	midpoint = (start+end)/2;
-	
-	if (size<=0) return;		
-	while (array[start]!=0 && array[end]!=0) {
-		if (array[start] < array[midpoint+1]) {
-			continue;
-		}
-		else if (array[start] > array[midpoint+1]) {
-			temp = array[start];
-			array[start] = array[midpoint+1];
-			for (i=midpoint+1; i>0; i--) {
-				array[i]=array[i-1];
-			}
-			array[i]=temp;		
-		}
-		else {
-			if (end==size-1) break;
-			temp = array[start];
-			array[start] = array[midpoint+1];
-			for (i=midpoint+1; i>0; i--) {
-				array[i]=array[i-1];
-			}
-			array[i]=temp;
-		}
+	    if (end - start <= 0) return 0;
+	    else if ((end - start) > 0) {
+	    	mergeSort(arr, start, mid);
+	        mergeSort(arr, (mid + 1), end);
+	        comparisons = comparisons + merge(arr, start, mid, end);
+	    }
+	     return comparisons;
 	}
-}
 
-public static void mergeSort(int [] array, int start, int end) {
-	int i;
-	
-	int midpoint = (start+end)/2;
-	
-	if (end-start <= 0) return;
-	else if (end-start > 1) {
-		mergeSort(array, start, midpoint);
-		mergeSort(array, midpoint+1, end);
+	public static int merge(int[] arr, int start, int mid, int end) {
+		int a = start;
+	    int b = mid + 1;
+	    int i, tmp, comparisons = 0;
+
+	    if (end - start <= 0) return 0;
+
+	    while ((a <= mid) && (b <= end)) {
+	    	if (arr[a] > arr[b]) {
+	    		tmp = arr[b++];
+	            for (i = ++mid; i > a; i--) arr[i] = arr[i - 1];
+	            	arr[a++] = tmp;
+	        }
+	        else if (arr[a] < arr[b]) a++;
+	        else {
+	           if ((a == mid) && (b == end)) break;
+	           tmp = arr[b++];
+	           a++;
+	           for (i = ++mid; i > a; i--) arr[i] = arr[i - 1];
+	           arr[a++] = tmp;
+	        }
+	            comparisons++;
+	    }
+	    return comparisons;
+	  }
 	}
-	merge(array, start, end);
-}
-
-
-}
