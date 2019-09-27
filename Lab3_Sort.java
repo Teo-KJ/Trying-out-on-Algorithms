@@ -5,10 +5,24 @@ import java.util.Scanner;
 public class Lab3_Sort {
 	
 	public static void main (String [] args) {
-		int i;
+		int i, IntSize;
 		Scanner sc = new Scanner (System.in);
 		
 		System.out.println("Welcome to merge sort! Please enter the number of integrs you want to sort.");
+//		System.out.println("1. 100,000 \n2. 1,000,000 \n3. 100,000,000 \n4. 10,000,000,000");
+//		int option = sc.nextInt();
+//		
+//		switch (option) {
+//		case 1:
+//			IntSize = 100000;
+//		case 2:
+//			IntSize = 1000000;
+//		case 3:
+//			IntSize = 100000000;
+//		case 4: default:
+//			IntSize = 10000000000;
+//		}
+		
 		int num_of_int = sc.nextInt();
 		int data;
 		int [] intData = new int[num_of_int];
@@ -111,4 +125,3 @@ public static void mergeSort(int [] array, int start, int end) {
 
 
 }
-
