@@ -1,54 +1,68 @@
 package CZ2001;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Lab3_Sort {
 	
 	public static void main (String [] args) {
-		int i, IntSize;
+		int i, IntSize = 0, randomNumber;
 		Scanner sc = new Scanner (System.in);
+		Random ram = new Random();
 		
 		System.out.println("Welcome to merge sort! Please enter the number of integrs you want to sort.");
-//		System.out.println("1. 100,000 \n2. 1,000,000 \n3. 100,000,000 \n4. 10,000,000,000");
-//		int option = sc.nextInt();
-//		
-//		switch (option) {
-//		case 1:
-//			IntSize = 100000;
-//		case 2:
-//			IntSize = 1000000;
-//		case 3:
-//			IntSize = 100000000;
-//		case 4: default:
-//			IntSize = 10000000000;
-//		}
+		System.out.println("1. 100,000 \n2. 1,000,000 \n3. 100,000,000 \n4. 1,000,000,000");
+		int option = sc.nextInt();
 		
-		int num_of_int = sc.nextInt();
-		int data;
-		int [] intData = new int[num_of_int];
-		int [] intData2 = new int[num_of_int];
-		
-		System.out.println("Enter the integers.");
-		
-		for (i=0; i<num_of_int; i++) {
-			data = sc.nextInt();
-			intData[i] = data;
-			intData2[i] = data;
+		switch (option) {
+		case (1):
+			IntSize = 10;
+		case (2):
+			IntSize = 100;
+		case (3):
+			IntSize = 1000;
+		case (4): default:
+			IntSize = 1000;
 		}
 		
+//		int num_of_int = sc.nextInt();
+//		int data;
+//		int [] intData = new int[num_of_int];
+//		int [] intData2 = new int[num_of_int];
+		
+		int [] intData = new int[IntSize];
+		int [] intData2 = new int[IntSize];
+		int [] num_list = new int[IntSize];
+		
+		for (i=1; i<=IntSize; i++) {
+			num_list[i-1] = i;
+		}
+		for (i=1; i<=IntSize; i++) {
+			randomNumber = ram.nextInt(num_list.length);
+			intData[i-1] = randomNumber;
+			intData2[i-1] = randomNumber;
+		}
+		
+//		System.out.println("Enter the integers.");
+//		for (i=0; i<num_of_int; i++) {
+//			data = sc.nextInt();
+//			intData[i] = data;
+//			intData2[i] = data;
+//		}
+		
 		System.out.println("\nYou have entered");
-		for (i=0; i<num_of_int; i++)
+		for (i=0; i<IntSize; i++)
 			System.out.print(intData[i] + " ");
 		System.out.println("");
-		for (i=0; i<num_of_int; i++)
+		for (i=0; i<IntSize; i++)
 			System.out.print(intData2[i] + " ");
 		
 		long InsertionSort_Start = System.nanoTime();
-		insertionSort(intData, num_of_int);
+		insertionSort(intData, IntSize);
 		long InsertionSort_End = System.nanoTime();
 		
 		System.out.println("\n\nThe sorted list is: ");
-		for (i=0; i<num_of_int; i++) {
+		for (i=0; i<IntSize; i++) {
 			System.out.print(intData[i] + " ");
 		}
 		
@@ -56,11 +70,11 @@ public class Lab3_Sort {
 		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total + " ns");
 		
 		long MergeSort_Start = System.nanoTime();
-		mergeSort(intData2, 0, num_of_int-1);
+		mergeSort(intData2, 0, IntSize-1);
 		long MergeSort_End = System.nanoTime();
 		
 		System.out.println("\nThe sorted list is: ");
-		for (i=0; i<num_of_int; i++) {
+		for (i=0; i<IntSize; i++) {
 			System.out.print(intData2[i] + " ");
 		}
 		
