@@ -10,7 +10,7 @@ public class Lab3_Sort_Descending {
 		Random ram = new Random();
 		
 		System.out.println("Welcome to merge sort! Please enter the number of integrs you want to sort.");
-		System.out.println("1. 100,000 \n2. 1,000,000 \n3. 100,000,000 \n4. 1,000,000,000");
+		System.out.println("1. 1000 \n2. 10,000 \n3. 100,000 \n4. 10,000,000");
 		int option = sc.nextInt();
 		
 		switch (option) {
@@ -24,7 +24,7 @@ public class Lab3_Sort_Descending {
 			IntSize = 100000;
 			break;
 		case (4): default:
-			IntSize = 10000;
+			IntSize = 10000000;
 		}
 		
 		int [] intData = new int[IntSize];
@@ -40,20 +40,24 @@ public class Lab3_Sort_Descending {
 			intData2[i-1] = randomNumber;
 		}
 		
-		System.out.println("\nYou have entered");
-		for (i=0; i<IntSize; i++)
-			System.out.print(intData[i] + " ");
-		System.out.println("");
-		for (i=0; i<IntSize; i++)
-			System.out.print(intData2[i] + " ");
+		if (IntSize>10000){
+			System.out.println("\nYou have entered");
+			for (i=0; i<IntSize; i++)
+				System.out.print(intData[i] + " ");
+			System.out.println("");
+			for (i=0; i<IntSize; i++)
+				System.out.print(intData2[i] + " ");
+		}
 		
 		long InsertionSort_Start = System.nanoTime();
 		insertionSort_Descending(intData, IntSize);
 		long InsertionSort_End = System.nanoTime();
 		
-		System.out.println("\n\nThe sorted list is: ");
-		for (i=0; i<IntSize; i++) {
-			System.out.print(intData[i] + " ");
+		if (IntSize>10000){
+			System.out.println("\n\nThe sorted list is: ");
+			for (i=0; i<IntSize; i++) {
+				System.out.print(intData[i] + " ");
+			}
 		}
 		
 		long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
@@ -63,9 +67,11 @@ public class Lab3_Sort_Descending {
 		mergeSort_Descending(intData2, 0, IntSize-1);
 		long MergeSort_End = System.nanoTime();
 		
-		System.out.println("\nThe sorted list is: ");
-		for (i=0; i<IntSize; i++) {
-			System.out.print(intData2[i] + " ");
+		if (IntSize>10000) {
+			System.out.println("\nThe sorted list is: ");
+			for (i=0; i<IntSize; i++) {
+				System.out.print(intData2[i] + " ");
+			}
 		}
 		
 		long MergeSort_Total = MergeSort_End - MergeSort_Start;
