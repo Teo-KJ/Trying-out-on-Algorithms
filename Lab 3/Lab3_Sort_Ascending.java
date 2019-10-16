@@ -5,33 +5,35 @@ import java.util.Random;
 
 public class Lab3_Sort_Ascending {
 	
-	public static void main (String [] args) {
+	public static void main (String[] args) {
 		int i, IntSize = 0, randomNumber;
+		long numOfComparisons;
 		Scanner sc = new Scanner (System.in);
 		Random ram = new Random();
 		
-		System.out.println("Welcome to merge sort! Please enter the number of integrs you want to sort.");
-		System.out.println("1. 1000 \n2. 10,000 \n3. 100,000 \n4. 10,000,000");
+		System.out.println("Welcome to sort! Please enter the number of integrs you want to sort.");
+		System.out.println("1. 100 \n2. 1000 \n3. 10,000 \n4. 100,000 \n5. 5,000,000");
 		int option = sc.nextInt();
 		
 		switch (option) {
-		case (1):
-			IntSize = 1000;
+		case (1): 
+			IntSize = 100;
 			break;
 		case (2):
-			IntSize = 10000;
+			IntSize = 1000;
 			break;
 		case (3):
+			IntSize = 10000;
+			break;
+		case (4): 
 			IntSize = 100000;
 			break;
-		case (4): default:
-			IntSize = 10000000;
+		case (5):
+			IntSize = 5000000;
+			break;
+		default:
+			IntSize = 1000;
 		}
-		
-//		int num_of_int = sc.nextInt();
-//		int data;
-//		int [] intData = new int[num_of_int];
-//		int [] intData2 = new int[num_of_int];
 		
 		int [] intData = new int[IntSize];
 		int [] intData2 = new int[IntSize];
@@ -46,14 +48,7 @@ public class Lab3_Sort_Ascending {
 			intData2[i-1] = randomNumber;
 		}
 		
-//		System.out.println("Enter the integers.");
-//		for (i=0; i<num_of_int; i++) {
-//			data = sc.nextInt();
-//			intData[i] = data;
-//			intData2[i] = data;
-//		}
-		
-		if (IntSize>10000){
+		if (IntSize<10000){
 			System.out.println("\nYou have entered");
 			for (i=0; i<IntSize; i++)
 				System.out.print(intData[i] + " ");
@@ -61,53 +56,60 @@ public class Lab3_Sort_Ascending {
 			for (i=0; i<IntSize; i++)
 				System.out.print(intData2[i] + " ");
 		}
+		
+		System.out.println("\n\nFor an array size of " + IntSize + ", the sorting algorithms spent the "
+				+ "following time:");
 				
 		long InsertionSort_Start = System.nanoTime();
 		insertionSort(intData, IntSize);
 		long InsertionSort_End = System.nanoTime();
 		
-		if (IntSize>10000){
-			System.out.println("\n\nThe sorted list is: ");
+		if (IntSize<10000){
+			System.out.println("\nThe sorted list with insertion sort is: ");
 			for (i=0; i<IntSize; i++) {
 				System.out.print(intData[i] + " ");
 			}
+			System.out.println();
 		}
 		
 		long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
-		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total + " ns");
+		System.out.println("Total time spent at Insertion Sort is " + InsertionSort_Total + " ns.");
 		
 		long MergeSort_Start = System.nanoTime();
-		mergeSort(intData2, 0, IntSize-1);
+	    numOfComparisons = mergeSort(intData2, 0, IntSize-1);
 		long MergeSort_End = System.nanoTime();
+		System.out.println("\nThe number of comparisons in merge is " + numOfComparisons + ".");
 		
-		if (IntSize>10000) {
-			System.out.println("\nThe sorted list is: ");
+		if (IntSize<10000) {
+			System.out.println("\nThe sorted list with merge sort is: ");
 			for (i=0; i<IntSize; i++) {
 				System.out.print(intData2[i] + " ");
 			}
+			System.out.println();
 		}
 		
 		long MergeSort_Total = MergeSort_End - MergeSort_Start;
-		System.out.println("\nTotal time spent at Merge Sort is " + MergeSort_Total + " ns");
+		System.out.println("Total time spent at Merge Sort is " + MergeSort_Total + " ns.");
 		
 		sc.close();
 	}
 	
 	public static void insertionSort(int [] array, int size) {
-		int i, j, temp, numOfComparisons = 0;
+		int i, j, temp;
+		long numOfComparisons = 0;
 		
 		for (i=1; i<size; i++) {
 			for (j=i; j>0; j--) {
 				temp = array[j];
+				numOfComparisons++;
 				if (array[j] < array[j-1]) {
-					numOfComparisons++;
 					array[j] = array[j-1];
 					array[j-1] = temp;
 				}
 				else break;
 			}
 		}
-		System.out.println("\nThe number of comparisons in insertion is " + numOfComparisons);
+		System.out.println("\nThe number of comparisons in insertion is " + numOfComparisons + ".");
 	}
 
 	public static int mergeSort(int[] arr, int start, int end) {
@@ -120,7 +122,7 @@ public class Lab3_Sort_Ascending {
 	        mergeSort(arr, (mid + 1), end);
 	        comparisons = comparisons + merge(arr, start, mid, end);
 	    }
-	     return comparisons;
+	    return comparisons;
 	}
 
 	public static int merge(int[] arr, int start, int mid, int end) {
