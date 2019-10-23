@@ -1,16 +1,17 @@
+package CZ2001;
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Lab3_Final {
 	public static void main (String [] args) {
 		int i, IntSize = 0, randomNumber;
-		long numOfComparisons;
 		String type = "";
 		Scanner sc = new Scanner (System.in);
 		Random ram = new Random();
 		
 		System.out.println("Welcome to sort! Please enter the number of integers you want to sort.");
-		System.out.println("1. 100 \n2. 1000 \n3. 10,000 \n4. 100,000 \n5. 1,000,000");
+		System.out.println("1. 100 \n2. 1000 \n3. 10,000 \n4. 100,000 \n5. 1,000,000 \n6. Input a size more than 1");
 		int option = sc.nextInt();
 		
 		switch (option) {
@@ -29,35 +30,40 @@ public class Lab3_Final {
 		case (5):
 			IntSize = 1000000;
 			break;
+		case 6:
+			System.out.println("Please enter the size");
+			IntSize = sc.nextInt();
+			break;
 		default:
 			IntSize = 1000;
 		}
 
 		System.out.println("Please indicate type of input array");
-		System.out.println("1. Random\n2. Ascending\n3. Descending");
-		int option2 = sc.nextInt();
+		System.out.println("1. Random \n2. Ascending \n3. Descending");
+		int input_type = sc.nextInt();
 
-		int [] intData = new int[IntSize];
-		int [] intData2 = new int[IntSize];
+		int [] unsorted = new int[IntSize];
+		int [] to_sort_insert = new int[IntSize];
+		int [] to_sort_merge = new int[IntSize];
 		
-		switch (option2) {
-		case (1): 
+		switch (input_type) {
+		case (1): // create an array of random numbers
 			for (i=1; i<=IntSize; i++) {
 				randomNumber = ram.nextInt(IntSize);
-				intData[i-1] = randomNumber;
+				unsorted[i-1] = randomNumber;
 			}
 			type = "random";
 			break;
-		case (2):
+		case (2): // create an array of numbers from 1 to n
 			for (i=1; i<=IntSize; i++) {
-				intData[i-1] = i;
+				unsorted[i-1] = i;
 			}
 			type = "ascending";
 			break;
-		case (3):
+		case (3): // create an array of numbers from n to 1
 			int j = 0;
 			for (i=IntSize; i>0; i--) {
-				intData[j] = i;
+				unsorted[j] = i;
 				j++;
 			}
 			type = "descending";
@@ -65,51 +71,50 @@ public class Lab3_Final {
 		default:
 			for (i=1; i<=IntSize; i++) {
 				randomNumber = ram.nextInt(IntSize);
-				intData[i-1] = randomNumber;
+				unsorted[i-1] = randomNumber;
 			}
 		}
 		
-		for(i=0; i<IntSize; i++)
-		{
-			intData2[i] = intData[i];
+		for (i=1; i<=IntSize; i++) { // copy the elements from the unsorted array to the arrays to be passed on to sorting functions
+			to_sort_insert[i-1] = unsorted[i-1];
+			to_sort_merge[i-1] = unsorted[i-1];
 		}
-	
 		
-		System.out.println("\n\nFor an array size of " + IntSize + ", the sorting algorithms spent the following time:");
-
-		for(i=0; i<IntSize; i++)
-			intData2[i] = intData[i];
-
+		System.out.println("\n\nFor an array size of " + IntSize + " and the " + type + " input type, the sorting algorithms spent the "
+				+ "following time:");
+		
+		// if the input size is large, do not print the elements in the array
 		if (IntSize<10000){
 			System.out.println("\nThe " + type + " order input is: ");
-			for (i=0; i<IntSize; i++) {
-				System.out.print(intData[i] + " ");
-			}
-			System.out.println("\n");
-			for (i=0; i<IntSize; i++) {
-				System.out.print(intData2[i] + " ");
-			}
+			for (i=0; i<IntSize; i++)
+				System.out.print(to_sort_insert[i] + " ");
+			System.out.println("");
+			for (i=0; i<IntSize; i++)
+				System.out.print(to_sort_merge[i] + " ");
 		}
 
 		long InsertionSort_Start = System.nanoTime();
-		insertionSort(intData, IntSize);
+		insertionSort(to_sort_insert, IntSize);
 		long InsertionSort_End = System.nanoTime();
 		
-		System.out.println("\n\nThe sorted list is: ");
-		for (i=0; i<IntSize; i++) {
-			System.out.print(intData[i] + " ");
+		if (IntSize<10000) {
+			System.out.println("\n\nThe sorted list is: ");
+			for (i=0; i<IntSize; i++)
+				System.out.print(to_sort_insert[i] + " ");
 		}
 		
+		// calculate the runtime
 		long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
 		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total + " ns");
 		
 		long MergeSort_Start = System.nanoTime();
-		System.out.println("\nThe number of comparisons in merge is " + mergeSort(intData2, 0, IntSize-1) + ".");
+		System.out.println("\nThe number of comparisons in merge is " + mergeSort(to_sort_merge, 0, IntSize-1) + ".");
 		long MergeSort_End = System.nanoTime();
 		
-		System.out.println("\nThe sorted list is: ");
-		for (i=0; i<IntSize; i++) {
-			System.out.print(intData2[i] + " ");
+		if (IntSize<10000) {
+			System.out.println("\nThe sorted list is: ");
+			for (i=0; i<IntSize; i++)
+				System.out.print(to_sort_merge[i] + " ");
 		}
 		
 		long MergeSort_Total = MergeSort_End - MergeSort_Start;
@@ -117,8 +122,10 @@ public class Lab3_Final {
 		
 		sc.close();
 	}
+	
 	public static void insertionSort(int [] array, int size) {
-		int i, j, temp, numOfComparisons = 0;
+		int i, j, temp;
+		long numOfComparisons = 0;
 		
 		for (i=1; i<size; i++) {
 			for (j=i; j>0; j--) {
