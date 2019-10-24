@@ -105,7 +105,7 @@ public class Lab3_Final {
 		
 		// calculate the runtime
 		// long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
-		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total + " ns");
+		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total/Math.pow(10, 6) + " ms");
 		
 		long MergeSort_Start = System.nanoTime();
 		System.out.println("\nThe number of comparisons in merge is " + mergeSort(to_sort_merge, 0, IntSize-1) + ".");
@@ -118,7 +118,7 @@ public class Lab3_Final {
 		}
 		
 		long MergeSort_Total = MergeSort_End - MergeSort_Start;
-		System.out.println("\nTotal time spent at Merge Sort is " + MergeSort_Total + " ns");
+		System.out.println("\nTotal time spent at Merge Sort is " + MergeSort_Total/Math.pow(10, 6) + " ms");
 		
 		sc.close();
 	}
