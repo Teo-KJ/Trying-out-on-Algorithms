@@ -93,9 +93,7 @@ public class Lab3_Final {
 				System.out.print(to_sort_merge[i] + " ");
 		}
 
-		//long InsertionSort_Start = System.nanoTime();
 		long InsertionSort_Total = insertionSort(to_sort_insert, IntSize);
-		//long InsertionSort_End = System.nanoTime();
 		
 		if (IntSize<10000) {
 			System.out.println("\n\nThe sorted list is: ");
@@ -104,7 +102,6 @@ public class Lab3_Final {
 		}
 		
 		// calculate the runtime
-		// long InsertionSort_Total = InsertionSort_End - InsertionSort_Start;
 		System.out.println("\nTotal time spent at Insertion Sort is " + InsertionSort_Total/Math.pow(10, 6) + " ms");
 		
 		long MergeSort_Start = System.nanoTime();
@@ -150,9 +147,6 @@ public class Lab3_Final {
 
 	    if (end - start <= 0) return 0;
 	    else if ((end - start) > 0) {
-//	    	comparisons++;
-//	    	int a = mergeSort(arr, start, mid);
-//	        int b = mergeSort(arr, (mid + 1), end);
 	        comparisons = (1 + mergeSort(arr, start, mid)) + (1 + mergeSort(arr, (mid + 1), end))  + merge(arr, start, mid, end);
 	    }
 	     return comparisons;
