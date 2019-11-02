@@ -48,10 +48,13 @@ public class FlightScheduling {
 		
 		LinkedList<Integer>[] graph = new LinkedList[size];
 		int lineCounter = 0;
+		String departure, destination;
 		sc.nextLine();
-		System.out.println("Here are your city options:");
 		
-		
+		System.out.println("Please enter your city of departure");
+		departure = sc.nextLine();
+		System.out.println("Please enter your destination");
+		destination = sc.nextLine();
 		
 		try{
 			bufferedReader = new BufferedReader(new FileReader(csvFile));
@@ -59,8 +62,13 @@ public class FlightScheduling {
 			while ((line = bufferedReader.readLine()) != null){
 				String[] entry = line.split(cvsSplitBy);
 				graph[lineCounter] = new LinkedList<Integer>();
-				
-				System.out.printf("(%s) %s\n", entry[1], entry[0]);
+				if (entry[0].equals(departure)){
+						departureID = Integer.parseInt(entry[1]);
+
+					}
+				else if (entry[0].equals(destination)){
+						destinationID = Integer.parseInt(entry[1]);
+					}
 				
 				for (int i = 1; i < entry.length; i++){
 					graph[lineCounter].add(Integer.parseInt(entry[i]));
@@ -77,12 +85,6 @@ public class FlightScheduling {
 				catch (IOException e) {e.printStackTrace(); }
 			}
 		}
-		
-		System.out.println("Please enter your city of departure");
-		departureID = sc.nextInt();
-		System.out.println("Please enter your destination");
-		destinationID = sc.nextInt();
-		
 		return graph;
 	}
 	
