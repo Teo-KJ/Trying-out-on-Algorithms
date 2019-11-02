@@ -18,23 +18,22 @@ public class FlightScheduling {
 	
 	public static void main(String[] args){
 		sc = new Scanner(System.in);
-		int size;
+		int option;
 
 		System.out.println("Welcome to the Flight Path Search!");
 		System.out.println("Please choose the region you would be travelling in.");
 		System.out.println("1. Southeast Asia \n2. The World \n0. Quit");
-		size = sc.nextInt();
 
 		do {
-			size = sc.nextInt();
-			switch (size) {
+			option = sc.nextInt();
+			switch (option) {
 			case 1:
-				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/size10graph.cvs";
+				csvFile = "src/southeastAsiaGraph.csv";
 				breadthFirstSearch(newGraph(10));
 				break;
 			case 2:
-				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/size10graph.cvs";
-				breadthFirstSearch(newGraph(10));
+				csvFile = "src/worldGraph.csv";
+				breadthFirstSearch(newGraph(22));
 				break;
 			case 0:
 				System.out.println("Goodbye.");
@@ -42,21 +41,18 @@ public class FlightScheduling {
 			default:
 				System.out.println("Goodbye.");
 			}
-		} while ((size < 3) && (size >= 0));
+		} while ((option < 3) && (option >= 0));
 	}
 	
 	static LinkedList<Integer>[] newGraph(int size){
-		String[] countries = {"Vientiane", "Bangkok"};
 		
 		LinkedList<Integer>[] graph = new LinkedList[size];
 		int lineCounter = 0;
-		
 		String departure, destination;
-		System.out.println("Please enter your city of departure");
-		System.out.println("1. ");
+		sc.nextLine();
 		
+		System.out.println("Please enter your city of departure");
 		departure = sc.nextLine();
-		//sc.nextLine();
 		System.out.println("Please enter your destination");
 		destination = sc.nextLine();
 		
@@ -119,7 +115,6 @@ public class FlightScheduling {
 						System.out.println("Your route is:");
 						path.add(destinationID);
 						for (Integer next : path){
-							System.out.println(next);
 							System.out.println(findName(next));
 						}
 						break;
@@ -152,5 +147,4 @@ public class FlightScheduling {
 		}
 		return "";
 	}
-
 }

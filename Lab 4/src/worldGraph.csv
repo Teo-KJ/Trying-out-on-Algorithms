@@ -1,0 +1,22 @@
+Toronto,0,5,1
+New York,1,5,2,0
+Mexico City,2,3,1
+Rio de Janeiro,3,2,4
+Buenos Aires,4,3,7
+London,5,0,1,6,8
+Paris,6,5,7
+Rome,7,6,4,9
+Berlin,8,5,9,11
+Istanbul,9,8,7,10,11
+Cairo,10,9,13
+Moscow,11,8,9,15
+Delhi,12,13,17,16,15
+Riyadh,13,10,12,14
+Mumbai,14,13,18
+Beijing,15,11,12,16,19
+Seoul,16,12,15,17,19
+Singapore,17,12,16,18,20,21
+Jakarta,18,14,17
+Tokyo,19,16,15,20
+Bangkok,20,19,17
+Sydney,21,17
