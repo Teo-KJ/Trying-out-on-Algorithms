@@ -17,6 +17,10 @@ public class FlightScheduling {
 	private static String cvsSplitBy = ",";
 	
 	public static void main(String[] args){
+		LinkedList<Integer> visited = new LinkedList<Integer>();
+		visited.add(departureID);
+		LinkedList<Integer> path = new LinkedList<Integer>();
+		path.add(departureID);
 		sc = new Scanner(System.in);
 		int option;
 
@@ -26,14 +30,22 @@ public class FlightScheduling {
 
 		do {
 			option = sc.nextInt();
+			LinkedList<Integer>[] graph;
+			
 			switch (option) {
 			case 1:
 				csvFile = "src/southeastAsiaGraph.csv";
-				breadthFirstSearch(newGraph(10));
+				graph = newGraph(10);
+				breadthFirstSearch(graph);
+				System.out.println();
+				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 2:
 				csvFile = "src/worldGraph.csv";
-				breadthFirstSearch(newGraph(22));
+				graph = newGraph(22);
+				breadthFirstSearch(graph);
+				System.out.println();
+				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 0:
 				System.out.println("Goodbye.");
@@ -42,6 +54,7 @@ public class FlightScheduling {
 				System.out.println("Goodbye.");
 			}
 		} while ((option < 3) && (option >= 0));
+		sc.close();
 	}
 	
 	static LinkedList<Integer>[] newGraph(int size){
@@ -86,6 +99,29 @@ public class FlightScheduling {
 		return graph;
 	}
 	
+	static void depthFirstSearch(Integer current, LinkedList<Integer>[] graph, LinkedList<Integer> path, LinkedList<Integer> visited) {
+		for (Integer neighbour : graph[current]){
+			if (!visited.contains(neighbour)){
+				visited.add(neighbour);
+				if (neighbour == destinationID) {
+					path.add(neighbour);
+					System.out.printf("We have found an alternate route using depth first algorithm\n");
+					System.out.println("Your route is:");
+					for (Integer next : path){
+						if (next != null){
+						System.out.println(findName(next));
+						}
+					}
+				}
+				else {
+					path.add(neighbour);
+					depthFirstSearch(neighbour, graph, path, visited);
+					path.removeLast();
+				}
+			}
+		}
+	}
+	
 	static void breadthFirstSearch(LinkedList<Integer>[] graph){
 		Queue<LinkedList<Integer>> queue = new LinkedList<>();
 		LinkedList<Integer> visited = new LinkedList<Integer>();
@@ -102,14 +138,14 @@ public class FlightScheduling {
 
 			for (Integer neighbour : graph[current]){
 				if (!visited.contains(neighbour)){
-					LinkedList<Integer> nextPath = new LinkedList(path);
+					LinkedList<Integer> nextPath = new LinkedList<Integer>(path);
 					visited.add(neighbour);
 					nextPath.add(neighbour);
 					queue.add(nextPath);
 				
 					if (neighbour == destinationID){
 						time = System.nanoTime() - time;
-						System.out.printf("We have found your route in %d nanoseconds\n", time);
+						System.out.printf("We have found your route in %d nanoseconds using breadth first algorithm\n", time);
 						System.out.println("Your route is:");
 						path.add(destinationID);
 						for (Integer next : path){
