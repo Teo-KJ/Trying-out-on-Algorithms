@@ -34,14 +34,14 @@ public class FlightScheduling {
 			
 			switch (option) {
 			case 1:
-				csvFile = "src/southeastAsiaGraph.csv";
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/southeastAsiaGraph.csv";
 				graph = newGraph(10);
 				breadthFirstSearch(graph);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 2:
-				csvFile = "src/worldGraph.csv";
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/worldGraph.csv";
 				graph = newGraph(22);
 				breadthFirstSearch(graph);
 				System.out.println();
@@ -63,8 +63,6 @@ public class FlightScheduling {
 		int lineCounter = 0;
 		sc.nextLine();
 		System.out.println("Here are your city options:");
-		
-		
 		
 		try{
 			bufferedReader = new BufferedReader(new FileReader(csvFile));
@@ -91,7 +89,7 @@ public class FlightScheduling {
 			}
 		}
 		
-		System.out.println("Please enter your city of departure");
+		System.out.println("\nPlease enter your city of departure");
 		departureID = sc.nextInt();
 		System.out.println("Please enter your destination");
 		destinationID = sc.nextInt();
@@ -105,8 +103,9 @@ public class FlightScheduling {
 				visited.add(neighbour);
 				if (neighbour == destinationID) {
 					path.add(neighbour);
-					System.out.printf("We have found an alternate route using depth first algorithm\n");
-					System.out.println("Your route is:");
+					System.out.println("=========================================================================================");
+					System.out.printf("If the depth first search algorithm is used, the following is the alternative route presented.\n");
+					System.out.println("\nYour route from " + findName(departureID) + " to " + findName(destinationID) + " is:");
 					for (Integer next : path){
 						if (next != null){
 						System.out.println(findName(next));
@@ -145,8 +144,8 @@ public class FlightScheduling {
 				
 					if (neighbour == destinationID){
 						time = System.nanoTime() - time;
-						System.out.printf("We have found your route in %d nanoseconds using breadth first algorithm\n", time);
-						System.out.println("Your route is:");
+						
+						System.out.println("\nYour route from " + findName(departureID) + " to " + findName(destinationID) + " is:");
 						path.add(destinationID);
 						for (Integer next : path){
 							System.out.println(findName(next));
@@ -156,6 +155,8 @@ public class FlightScheduling {
 				}
 			}
 		}
+		// time_in_ms = time/Math.pow(10, 6);
+		System.out.println("With the breadth first search algorithm, the route was computed in " + time/Math.pow(10, 6) + " millisecond (ms).\n");
 	}
 	
 	static String findName(Integer locationID){
