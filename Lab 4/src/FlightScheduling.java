@@ -26,7 +26,7 @@ public class FlightScheduling {
 
 		System.out.println("Welcome to the Flight Path Search!");
 		System.out.println("Please choose the region you would be travelling in.");
-		System.out.println("1. Southeast Asia \n2. The World \n0. Quit");
+		System.out.println("1. Southeast Asia \n2. The World \n3. Asia Pacific \n0. Quit");
 
 		do {
 			option = sc.nextInt();
@@ -34,15 +34,22 @@ public class FlightScheduling {
 			
 			switch (option) {
 			case 1:
-				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/southeastAsiaGraph.csv";
+				csvFile = "src/southeastAsiaGraph.csv";
 				graph = newGraph(10);
 				breadthFirstSearch(graph);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 2:
-				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/worldGraph.csv";
-				graph = newGraph(22);
+				csvFile = "src/worldGraph.csv";
+				graph = newGraph(27);
+				breadthFirstSearch(graph);
+				System.out.println();
+				depthFirstSearch(departureID, graph, path, visited);
+				break;
+			case 3:
+				csvFile = "src/asiaPacificGraph.csv";
+				graph = newGraph(19);
 				breadthFirstSearch(graph);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
