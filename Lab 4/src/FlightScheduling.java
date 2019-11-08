@@ -23,10 +23,11 @@ public class FlightScheduling {
 		path.add(departureID);
 		sc = new Scanner(System.in);
 		int option;
+		int note = 0;
 
 		System.out.println("Welcome to the Flight Path Search!");
 		System.out.println("Please choose the region you would be travelling in.");
-		System.out.println("1. Southeast Asia \n2. The World \n3. Asia Pacific \n0. Quit");
+		System.out.println("1. Southeast Asia \n2. The World \n3. Asia Pacific \n4. Large Graph size of 12959 \n0. Quit");
 
 		do {
 			option = sc.nextInt();
@@ -34,25 +35,32 @@ public class FlightScheduling {
 			
 			switch (option) {
 			case 1:
-				csvFile = "src/southeastAsiaGraph.csv";
-				graph = newGraph(10);
-				breadthFirstSearch(graph);
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/southeastAsiaGraph.csv";
+				graph = newGraph(10, note);
+				breadthFirstSearch(graph, note);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 2:
-				csvFile = "src/worldGraph.csv";
-				graph = newGraph(27);
-				breadthFirstSearch(graph);
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/worldGraph.csv";
+				graph = newGraph(27, note);
+				breadthFirstSearch(graph, note);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
 				break;
 			case 3:
-				csvFile = "src/asiaPacificGraph.csv";
-				graph = newGraph(19);
-				breadthFirstSearch(graph);
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/asiaPacificGraph.csv";
+				graph = newGraph(19, note);
+				breadthFirstSearch(graph, note);
 				System.out.println();
 				depthFirstSearch(departureID, graph, path, visited);
+				break;
+			case 4:
+				csvFile = "C:/Users/tkjie/Documents/GitHub/Trying-Out-on-Algorithms/Lab 4/src/worldCitiesGraph.csv";
+				note = 1;
+				graph = newGraph(12959, note);
+				breadthFirstSearch(graph, note);
+				System.out.println();
 				break;
 			case 0:
 				System.out.println("Goodbye.");
@@ -60,11 +68,11 @@ public class FlightScheduling {
 			default:
 				System.out.println("Goodbye.");
 			}
-		} while ((option < 3) && (option >= 0));
+		} while ((option <= 4) && (option >= 0));
 		sc.close();
 	}
 	
-	static LinkedList<Integer>[] newGraph(int size){
+	static LinkedList<Integer>[] newGraph(int size, int note){
 		
 		LinkedList<Integer>[] graph = new LinkedList[size];
 		int lineCounter = 0;
@@ -77,8 +85,8 @@ public class FlightScheduling {
 			while ((line = bufferedReader.readLine()) != null){
 				String[] entry = line.split(cvsSplitBy);
 				graph[lineCounter] = new LinkedList<Integer>();
-				
-				System.out.printf("(%s) %s\n", entry[1], entry[0]);
+				if (note!=1)
+					System.out.printf("(%s) %s\n", entry[1], entry[0]);
 				
 				for (int i = 1; i < entry.length; i++){
 					graph[lineCounter].add(Integer.parseInt(entry[i]));
@@ -95,11 +103,18 @@ public class FlightScheduling {
 				catch (IOException e) {e.printStackTrace(); }
 			}
 		}
-		
-		System.out.println("\nPlease enter your city of departure");
-		departureID = sc.nextInt();
-		System.out.println("Please enter your destination");
-		destinationID = sc.nextInt();
+		if (note!=1){
+			System.out.println("\nPlease enter your city of departure");
+			departureID = sc.nextInt();
+			System.out.println("Please enter your destination");
+			destinationID = sc.nextInt();
+		}
+		else{
+			System.out.println("\nPlease enter random number from 1 to 12959 for departing city");
+			departureID = sc.nextInt();
+			System.out.println("\nPlease enter random number from 1 to 12959 for destination city");
+			destinationID = sc.nextInt();
+		}
 		
 		return graph;
 	}
@@ -113,6 +128,7 @@ public class FlightScheduling {
 					System.out.println("=========================================================================================");
 					System.out.printf("If the depth first search algorithm is used, the following is the alternative route presented.\n");
 					System.out.println("\nYour route from " + findName(departureID) + " to " + findName(destinationID) + " is:");
+					
 					for (Integer next : path){
 						if (next != null){
 						System.out.println(findName(next));
@@ -128,7 +144,7 @@ public class FlightScheduling {
 		}
 	}
 	
-	static void breadthFirstSearch(LinkedList<Integer>[] graph){
+	static void breadthFirstSearch(LinkedList<Integer>[] graph, int note){
 		Queue<LinkedList<Integer>> queue = new LinkedList<>();
 		LinkedList<Integer> visited = new LinkedList<Integer>();
 		LinkedList<Integer> path = new LinkedList<Integer>();
@@ -151,7 +167,6 @@ public class FlightScheduling {
 				
 					if (neighbour == destinationID){
 						time = System.nanoTime() - time;
-						
 						System.out.println("\nYour route from " + findName(departureID) + " to " + findName(destinationID) + " is:");
 						path.add(destinationID);
 						for (Integer next : path){
@@ -162,7 +177,7 @@ public class FlightScheduling {
 				}
 			}
 		}
-		// time_in_ms = time/Math.pow(10, 6);
+		System.out.println("\nRoute from " + findName(departureID) + " to " + findName(destinationID) + ":");
 		System.out.println("With the breadth first search algorithm, the route was computed in " + time/Math.pow(10, 6) + " millisecond (ms).\n");
 	}
 	
