@@ -1,6 +1,6 @@
 # Trying-Out-on-Algorithms
-Trying algorithms time complexity with group mates.
-A group project consist of the following members:
+Trying algorithms time complexity and performance with group mates for a school project.
+This group project consist of the following members:
 Isaac, Sven, Kai Jie, Toby, Clarence and Dana
 
 ## Lab 2
