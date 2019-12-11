@@ -2,11 +2,11 @@
 Trying algorithms time complexity and performance with group mates for a school project.
 This group project consist of the following members:
 * [Isaac](https://github.com/istudyaac)
-* Sven
-* Kai Jie
-* Toby
-* Clarence
-* Dana
+* [Sven](https://github.com/imistyfied)
+* [Kai Jie](https://github.com/Teo-KJ)
+* [Toby](https://github.com/heyitztoby)
+* [Clarence](https://github.com/clarenceckw)
+* [Dana](https://github.com/ajivila)
 
 ## Lab 2
 Project is on implementing open address hashing on a available dataset of employee ids, then analyse the results on different load factor of the hash table. Two types of open address hashing methods were used, linear probe and double hashing which are implemented in the files Lab2_Linear Probe.py and Lab2_Double Hashing.py respectively.
