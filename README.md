@@ -1,7 +1,7 @@
 # Trying-Out-on-Algorithms
 Trying algorithms time complexity and performance with group mates for a school project.
 This group project consist of the following members:
-* Isaac
+* [Isaac](https://github.com/istudyaac)
 * Sven
 * Kai Jie
 * Toby
